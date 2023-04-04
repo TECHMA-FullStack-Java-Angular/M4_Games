@@ -164,6 +164,7 @@ public class FramePrincipal extends JFrame {
 					check_cpu_turn();
 				}
 				turn=0;
+				check_cpu_turn();
 			}
 		}
 
@@ -187,21 +188,17 @@ public class FramePrincipal extends JFrame {
 				b.setText("X");
 				//b.setEnabled(false);
 				turn++;
-			} else if (turn%2 != 0) {
+			} else {
 				lblAccion.setText("Turno de jugador " + textJug1.getText());
 				b.setText("O");
 				//b.setEnabled(false);
 				turn++;
-			} else {
-				for (int i = 0; i < listaBotones.size(); i++) {
-					listaBotones.get(i).setEnabled(false);
-					listaBotones.get(i).setSelected(false);
-					
-				}
 			}
+			listaBotones.remove(b);
+			if (ganador()) return;
+			check_cpu_turn();
 		}
-		if (ganador()) return;
-		check_cpu_turn();
+		
 	}
 
 	
