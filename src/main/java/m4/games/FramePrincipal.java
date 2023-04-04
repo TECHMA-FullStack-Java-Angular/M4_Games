@@ -214,8 +214,9 @@ public class FramePrincipal extends JFrame {
 						turn++;
 					} else {
 						for (int i = 0; i < listaBotones.size(); i++) {
-							listaBotones.get(i).setEnabled(true);
+							listaBotones.get(i).setEnabled(false);
 							listaBotones.get(i).setSelected(false);
+							
 						}
 						
 						
