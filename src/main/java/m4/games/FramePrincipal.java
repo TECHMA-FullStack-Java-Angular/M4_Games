@@ -1,18 +1,25 @@
 package m4.games;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JToggleButton;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultButtonModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JInternalFrame;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class FramePrincipal extends JFrame {
 
@@ -20,6 +27,8 @@ public class FramePrincipal extends JFrame {
 	private JTextField textJug1;
 	private JTextField textJug2;
 	private ButtonGroup jugador = new ButtonGroup();
+	
+	private int turn = 0;
 
 
 
@@ -36,41 +45,51 @@ public class FramePrincipal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		
 		JToggleButton tglbtn = new JToggleButton("");
-		tglbtn.setBounds(72, 75, 94, 85);
+		tglbtn.setBounds(60, 40, 90, 90);
 		contentPane.add(tglbtn);
+		xo(tglbtn);
 		
 		JToggleButton tglbtn_1 = new JToggleButton("");
-		tglbtn_1.setBounds(173, 75, 94, 85);
+		tglbtn_1.setBounds(155, 40, 90, 90);
 		contentPane.add(tglbtn_1);
+		xo(tglbtn_1);
 		
 		JToggleButton tglbtn_2 = new JToggleButton("");
-		tglbtn_2.setBounds(277, 75, 94, 85);
+		tglbtn_2.setBounds(250, 40, 90, 90);
 		contentPane.add(tglbtn_2);
+		xo(tglbtn_2);
 		
 		JToggleButton tglbtn_3 = new JToggleButton("");
-		tglbtn_3.setBounds(72, 170, 94, 85);
+		tglbtn_3.setBounds(60, 135, 90, 90);
 		contentPane.add(tglbtn_3);
+		xo(tglbtn_3);
 		
 		JToggleButton tglbtn_4 = new JToggleButton("");
-		tglbtn_4.setBounds(173, 170, 94, 85);
+		tglbtn_4.setBounds(155, 135, 90, 90);
 		contentPane.add(tglbtn_4);
+		xo(tglbtn_4);
 		
 		JToggleButton tglbtn_5 = new JToggleButton("");
-		tglbtn_5.setBounds(277, 171, 94, 85);
+		tglbtn_5.setBounds(250, 135, 90, 90);
 		contentPane.add(tglbtn_5);
+		xo(tglbtn_5);
 		
 		JToggleButton tglbtn_6 = new JToggleButton("");
-		tglbtn_6.setBounds(72, 266, 94, 85);
+		tglbtn_6.setBounds(60, 230, 90, 90);
 		contentPane.add(tglbtn_6);
+		xo(tglbtn_6);
 		
 		JToggleButton tglbtn_7 = new JToggleButton("");
-		tglbtn_7.setBounds(173, 266, 94, 85);
+		tglbtn_7.setBounds(155, 230, 90, 90);
 		contentPane.add(tglbtn_7);
+		xo(tglbtn_7);
 		
 		JToggleButton tglbtn_8 = new JToggleButton("");
-		tglbtn_8.setBounds(277, 267, 94, 85);
+		tglbtn_8.setBounds(250, 230, 90, 90);
 		contentPane.add(tglbtn_8);
+		xo(tglbtn_8);
 		
 		JButton btnNuevaPartida = new JButton("Nueva Partida");
 		btnNuevaPartida.addActionListener(aL);
@@ -141,4 +160,23 @@ public class FramePrincipal extends JFrame {
 			
 		}
 	};
+	
+	public void xo(JToggleButton b) {
+		b.addItemListener(new ItemListener() {			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				b.setFont(new Font("Arial", Font.BOLD, 80));
+				if(b.isSelected()) {
+					if (turn%2 == 0) {
+						b.setText("x");
+					} else {
+						b.setText("o");
+					}
+				}
+				b.setEnabled(false);
+				turn++;
+				
+			}
+		});
+	}
 }
