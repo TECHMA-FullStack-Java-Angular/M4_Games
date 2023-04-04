@@ -33,6 +33,9 @@ public class FramePrincipal extends JFrame {
 	private ButtonGroup jugador1 = new ButtonGroup();
 	private ButtonGroup jugador2 = new ButtonGroup();
 	private ArrayList<JToggleButton> listaBotones = new ArrayList<JToggleButton>();
+	JToggleButton[][] tablero = new JToggleButton[3][3];
+	JLabel lblAccion;
+	JRadioButton rdbtnCPU_1, rdbtnCPU_2;
 
 	private int turn = 0;
 
@@ -59,77 +62,14 @@ public class FramePrincipal extends JFrame {
 		contentPane.add(textJug1);
 		textJug1.setColumns(10);
 
-		JLabel lblAccion = new JLabel("Empieza la partida, turno de");
+		lblAccion = new JLabel("Introduce los nombres de los jugadores");
 		lblAccion.setBounds(427, 80, 226, 14);
 		contentPane.add(lblAccion);
 
-		JToggleButton tglbtn = new JToggleButton("");
-		tglbtn.setBounds(60, 40, 90, 90);
-		contentPane.add(tglbtn);
-		xo(tglbtn, lblAccion);
-		listaBotones.add(tglbtn);
-
-		JToggleButton tglbtn_1 = new JToggleButton("");
-		tglbtn_1.setBounds(155, 40, 90, 90);
-		contentPane.add(tglbtn_1);
-		xo(tglbtn_1, lblAccion);
-		listaBotones.add(tglbtn_1);
-
-		JToggleButton tglbtn_2 = new JToggleButton("");
-		tglbtn_2.setBounds(250, 40, 90, 90);
-		contentPane.add(tglbtn_2);
-		xo(tglbtn_2, lblAccion);
-		listaBotones.add(tglbtn_2);
-
-		JToggleButton tglbtn_3 = new JToggleButton("");
-		tglbtn_3.setBounds(60, 135, 90, 90);
-		contentPane.add(tglbtn_3);
-		xo(tglbtn_3, lblAccion);
-		listaBotones.add(tglbtn_3);
-
-		JToggleButton tglbtn_4 = new JToggleButton("");
-		tglbtn_4.setBounds(155, 135, 90, 90);
-		contentPane.add(tglbtn_4);
-		xo(tglbtn_4, lblAccion);
-		listaBotones.add(tglbtn_4);
-
-		JToggleButton tglbtn_5 = new JToggleButton("");
-		tglbtn_5.setBounds(250, 135, 90, 90);
-		contentPane.add(tglbtn_5);
-		xo(tglbtn_5, lblAccion);
-		listaBotones.add(tglbtn_5);
-
-		JToggleButton tglbtn_6 = new JToggleButton("");
-		tglbtn_6.setBounds(60, 230, 90, 90);
-		contentPane.add(tglbtn_6);
-		xo(tglbtn_6, lblAccion);
-		listaBotones.add(tglbtn_6);
-
-		JToggleButton tglbtn_7 = new JToggleButton("");
-		tglbtn_7.setBounds(155, 230, 90, 90);
-		contentPane.add(tglbtn_7);
-		xo(tglbtn_7, lblAccion);
-		listaBotones.add(tglbtn_7);
-
-		JToggleButton tglbtn_8 = new JToggleButton("");
-		tglbtn_8.setBounds(250, 230, 90, 90);
-		contentPane.add(tglbtn_8);
-		xo(tglbtn_8, lblAccion);
-		listaBotones.add(tglbtn_8);
-
-		Game.startGame(lblAccion, tglbtn);
-		Game.buttonOff(tglbtn);
-		Game.buttonOff(tglbtn_1);
-		Game.buttonOff(tglbtn_2);
-		Game.buttonOff(tglbtn_3);
-		Game.buttonOff(tglbtn_4);
-		Game.buttonOff(tglbtn_5);
-		Game.buttonOff(tglbtn_6);
-		Game.buttonOff(tglbtn_7);
-		Game.buttonOff(tglbtn_8);
+		gameBoardGenerator();
 
 		JButton btnNuevaPartida = new JButton("Nueva Partida");
-		btnNuevaPartida.addActionListener(aL);
+		btnNuevaPartida.addActionListener(inicio_partida);
 		btnNuevaPartida.setBounds(505, 25, 119, 23);
 		contentPane.add(btnNuevaPartida);
 
@@ -145,15 +85,16 @@ public class FramePrincipal extends JFrame {
 		lblNewLabel_1.setBounds(427, 170, 49, 14);
 		contentPane.add(lblNewLabel_1);
 
-		JRadioButton rdbtnHumano = new JRadioButton("Humano");
-		rdbtnHumano.setBounds(427, 218, 111, 23);
-		contentPane.add(rdbtnHumano);
-		jugador1.add(rdbtnHumano);
+		JRadioButton rdbtnHumano_1 = new JRadioButton("Humano");
+		rdbtnHumano_1.setBounds(427, 218, 111, 23);
+		contentPane.add(rdbtnHumano_1);
+		jugador1.add(rdbtnHumano_1);
+		rdbtnHumano_1.setSelected(true);
 
-		JRadioButton rdbtnCPU = new JRadioButton("CPU");
-		rdbtnCPU.setBounds(567, 218, 111, 23);
-		contentPane.add(rdbtnCPU);
-		jugador2.add(rdbtnCPU);
+		rdbtnCPU_1 = new JRadioButton("CPU");
+		rdbtnCPU_1.setBounds(567, 218, 111, 23);
+		contentPane.add(rdbtnCPU_1);
+		jugador1.add(rdbtnCPU_1);
 
 		JLabel lblJugador2 = new JLabel("Jugador 2:");
 		lblJugador2.setBounds(427, 284, 88, 14);
@@ -163,13 +104,17 @@ public class FramePrincipal extends JFrame {
 		lblNombre_2.setBounds(427, 309, 49, 14);
 		contentPane.add(lblNombre_2);
 
-		JRadioButton rdbtnHumano_1 = new JRadioButton("Humano");
-		rdbtnHumano_1.setBounds(427, 359, 111, 23);
-		contentPane.add(rdbtnHumano_1);
+		JRadioButton rdbtnHumano_2 = new JRadioButton("Humano");
+		rdbtnHumano_2.setBounds(427, 359, 111, 23);
+		contentPane.add(rdbtnHumano_2);
+		jugador2.add(rdbtnHumano_2);
+		rdbtnHumano_2.setSelected(true);
 
-		JRadioButton rdbtnCPU_1 = new JRadioButton("CPU");
-		rdbtnCPU_1.setBounds(542, 359, 111, 23);
-		contentPane.add(rdbtnCPU_1);
+		rdbtnCPU_2 = new JRadioButton("CPU");
+		rdbtnCPU_2.setBounds(542, 359, 111, 23);
+		contentPane.add(rdbtnCPU_2);
+		jugador2.add(rdbtnCPU_2);
+
 
 		JSeparator separator = new JSeparator();
 		separator.setBounds(427, 105, 250, 2);
@@ -178,56 +123,84 @@ public class FramePrincipal extends JFrame {
 		setVisible(true);
 	}
 
-	ActionListener aL = new ActionListener() {
+	public void gameBoardGenerator() {
+		int px = 60;
+		int py = 60;
+		final int SIZE = 90;
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				tablero[j][i] = new JToggleButton();
+				tablero[j][i].setBounds(px, py, SIZE, SIZE);
+				contentPane.add(tablero[j][i]);
+				listaBotones.add(tablero[j][i]);
+				tablero[j][i].setEnabled(false);
+				set_xo_listener(tablero[j][i]);
+				px += 95;
+			}
+			px = 60;
+			py += 95;
+		}
+	}
+	public void set_xo_listener(JToggleButton b) {
+		b.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				xo(b);
+			}
+		});
+	}
+
+	ActionListener inicio_partida = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-
-			for (int i = 0; i < listaBotones.size(); i++) {
-				listaBotones.get(i).setSelected(false);
-				listaBotones.get(i).setText("");
+			if (textJug1.getText().isEmpty() || textJug2.getText().isEmpty()) {
+				lblAccion.setText("Introduce los nombres de los jugadores");
 			}
-
-			for (int i = 0; i < listaBotones.size(); i++) {
-				listaBotones.get(i).setEnabled(true);
-				
+			//else if (rdbtnCPU.isSelected && rdnbtn)
+			else {
+				for (int i = 0; i < listaBotones.size(); i++) {
+					listaBotones.get(i).setSelected(false);
+					listaBotones.get(i).setText("");
+					listaBotones.get(i).setEnabled(true);
+					check_cpu_turn();
+				}
+				turn=0;
 			}
-			turn=0;
 		}
 
 	};
 
-	public void xo(JToggleButton b, JLabel l) {
-		b.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				b.setFont(new Font("Arial", Font.BOLD, 70));
-				if (b.isSelected()) {
-
-					if (turn % 2 == 0 && turn < 5) {
-						l.setText("Turno de jugador " + textJug2.getText());
-						b.setText("X");
-						b.setEnabled(false);
-						turn++;
-					} else if (turn % 2 != 0 && turn <=5) {
-						l.setText("Turno de jugador " + textJug1.getText());
-						b.setText("O");
-						b.setEnabled(false);
-						turn++;
-					} else {
-						for (int i = 0; i < listaBotones.size(); i++) {
-							listaBotones.get(i).setEnabled(false);
-							listaBotones.get(i).setSelected(false);
-							
-						}
-						
-						
-						
-						
-						
-					}
-				}
-				
-
-			}
-		});
+	public boolean ganador() {
+		// si hay un ganador lo mustra por pantalla y reorna true
+		// si no hay ganador retorna false
+		return true;
 	}
+
+	public void check_cpu_turn() {
+		// si es el turno de CPU, tuira CPU
+	}
+ 
+	private void xo(JToggleButton b) {
+		b.setFont(new Font("Arial", Font.BOLD, 70));
+		if (b.isSelected()) {
+			if (turn%2 == 0) {
+				lblAccion.setText("Turno de jugador " + textJug2.getText());
+				b.setText("X");
+				b.setEnabled(false);
+				turn++;
+			} else if (turn%2 != 0) {
+				lblAccion.setText("Turno de jugador " + textJug1.getText());
+				b.setText("O");
+				b.setEnabled(false);
+				turn++;
+			} else {
+				for (int i = 0; i < listaBotones.size(); i++) {
+					listaBotones.get(i).setEnabled(false);
+					listaBotones.get(i).setSelected(false);
+					
+				}
+			}
+		}
+	}
+
+	
 }
