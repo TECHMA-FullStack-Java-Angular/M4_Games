@@ -45,6 +45,16 @@ public class FramePrincipal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		textJug2 = new JTextField();
+		textJug2.setColumns(10);
+		textJug2.setBounds(505, 309, 96, 20);
+		contentPane.add(textJug2);
+		
+		textJug1 = new JTextField();
+		textJug1.setBounds(510, 162, 96, 20);
+		contentPane.add(textJug1);
+		textJug1.setColumns(10);
+		
 		
 		JToggleButton tglbtn = new JToggleButton("");
 		tglbtn.setBounds(60, 40, 90, 90);
@@ -96,7 +106,7 @@ public class FramePrincipal extends JFrame {
 		btnNuevaPartida.setBounds(505, 25, 119, 23);
 		contentPane.add(btnNuevaPartida);
 		
-		JLabel lblAccion = new JLabel("accion a realizar");
+		JLabel lblAccion = new JLabel(textJug1.getText() +", coloca ficha ...");
 		lblAccion.setBounds(427, 80, 226, 14);
 		contentPane.add(lblAccion);
 		
@@ -104,10 +114,7 @@ public class FramePrincipal extends JFrame {
 		lblJugador1.setBounds(427, 124, 88, 14);
 		contentPane.add(lblJugador1);
 		
-		textJug1 = new JTextField();
-		textJug1.setBounds(510, 162, 96, 20);
-		contentPane.add(textJug1);
-		textJug1.setColumns(10);
+		
 		
 		JLabel lblNombre = new JLabel("");
 		lblNombre.setBounds(427, 170, 49, 14);
@@ -135,10 +142,7 @@ public class FramePrincipal extends JFrame {
 		lblNombre_2.setBounds(427, 309, 49, 14);
 		contentPane.add(lblNombre_2);
 		
-		textJug2 = new JTextField();
-		textJug2.setColumns(10);
-		textJug2.setBounds(505, 309, 96, 20);
-		contentPane.add(textJug2);
+		
 		
 		JRadioButton rdbtnHumano_1 = new JRadioButton("Humano");
 		rdbtnHumano_1.setBounds(427, 359, 111, 23);
