@@ -188,9 +188,9 @@ public class FramePrincipal extends JFrame {
 
 			for (int i = 0; i < listaBotones.size(); i++) {
 				listaBotones.get(i).setEnabled(true);
-				
+
 			}
-			turn=0;
+			turn = 0;
 		}
 
 	};
@@ -207,7 +207,7 @@ public class FramePrincipal extends JFrame {
 						b.setText("X");
 						b.setEnabled(false);
 						turn++;
-					} else if (turn % 2 != 0 && turn <=5) {
+					} else if (turn % 2 != 0 && turn <= 5) {
 						l.setText("Turno de jugador " + textJug1.getText());
 						b.setText("O");
 						b.setEnabled(false);
@@ -216,16 +216,11 @@ public class FramePrincipal extends JFrame {
 						for (int i = 0; i < listaBotones.size(); i++) {
 							listaBotones.get(i).setEnabled(false);
 							listaBotones.get(i).setSelected(false);
-							
+
 						}
-						
-						
-						
-						
-						
+
 					}
 				}
-				
 
 			}
 		});
