@@ -115,7 +115,6 @@ public class FramePrincipal extends JFrame {
 		contentPane.add(rdbtnCPU_2);
 		jugador2.add(rdbtnCPU_2);
 
-
 		JSeparator separator = new JSeparator();
 		separator.setBounds(427, 105, 250, 2);
 		contentPane.add(separator);
@@ -141,6 +140,7 @@ public class FramePrincipal extends JFrame {
 			py += 95;
 		}
 	}
+
 	public void set_xo_listener(JToggleButton b) {
 		b.addItemListener(new ItemListener() {
 			@Override
@@ -155,7 +155,7 @@ public class FramePrincipal extends JFrame {
 			if (textJug1.getText().isEmpty() || textJug2.getText().isEmpty()) {
 				lblAccion.setText("Introduce los nombres de los jugadores");
 			}
-			//else if (rdbtnCPU.isSelected && rdnbtn)
+			// else if (rdbtnCPU.isSelected && rdnbtn)
 			else {
 				for (int i = 0; i < listaBotones.size(); i++) {
 					listaBotones.get(i).setSelected(false);
@@ -163,7 +163,7 @@ public class FramePrincipal extends JFrame {
 					listaBotones.get(i).setEnabled(true);
 					check_cpu_turn();
 				}
-				turn=0;
+				turn = 0;
 			}
 		}
 
@@ -178,31 +178,64 @@ public class FramePrincipal extends JFrame {
 	public void check_cpu_turn() {
 		// si es el turno de CPU, tuira CPU
 	}
- 
+
 	private void xo(JToggleButton b) {
 		b.setFont(new Font("Arial", Font.BOLD, 70));
 		if (b.isSelected()) {
-			if (turn%2 == 0) {
+			if (turn % 2 == 0 && turn <= 5) {
 				lblAccion.setText("Turno de jugador " + textJug2.getText());
 				b.setText("X");
-				//b.setEnabled(false);
+				// b.setEnabled(false);
 				turn++;
-			} else if (turn%2 != 0) {
+			} else if (turn % 2 != 0 && turn <= 5) {
 				lblAccion.setText("Turno de jugador " + textJug1.getText());
 				b.setText("O");
-				//b.setEnabled(false);
+				// b.setEnabled(false);
 				turn++;
-			} else {
+			} else if (turn % 2 == 0 && turn == 6) {
 				for (int i = 0; i < listaBotones.size(); i++) {
-					listaBotones.get(i).setEnabled(false);
-					listaBotones.get(i).setSelected(false);
+
+					if (listaBotones.get(i).getText() == "X") {
+						listaBotones.get(i).setEnabled(true);
+						listaBotones.get(i).setSelected(false);
+						
+
+					} else {
+						listaBotones.get(i).setEnabled(false);
+					}
+
+				}
+
+			} else if (turn % 2 != 0 && turn == 7) {
+				for (int i = 0; i < listaBotones.size(); i++) {
+					if (listaBotones.get(i).getText() == "O") {
+						listaBotones.get(i).setEnabled(true);
+						listaBotones.get(i).setSelected(false);
+						
+
+					} else {
+						listaBotones.get(i).setEnabled(false);
+					}
+				}
+				
 					
 				}
-			}
+//				else if( turn%2 ==0 && turn> 6) {
+//			if(b.isSelected()) {
+//				System.out.println("prueba");
+//				b.setText("");
+//				for (int i = 0; i < listaBotones.size(); i++) {
+//					listaBotones.get(i).setEnabled(true);
+//				}
+//			}
+//
+//			}
+			
+			
 		}
-		if (ganador()) return;
+		if (ganador())
+			return;
 		check_cpu_turn();
 	}
 
-	
 }
