@@ -1,6 +1,5 @@
 package m4.games;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.JFrame;
@@ -8,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JToggleButton;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultButtonModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -17,9 +15,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JInternalFrame;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
 import javax.swing.JSeparator;
 
 public class FramePrincipal extends JFrame {
@@ -56,68 +51,15 @@ public class FramePrincipal extends JFrame {
 		contentPane.add(textJug1);
 		textJug1.setColumns(10);
 
+			
 
 		JLabel lblAccion = new JLabel("Empieza la partida, turno de");
 		lblAccion.setBounds(427, 80, 226, 14);
 		contentPane.add(lblAccion);
-
 		
-		JToggleButton tglbtn = new JToggleButton("");
-		tglbtn.setBounds(60, 40, 90, 90);
-		contentPane.add(tglbtn);
-		xo(tglbtn, lblAccion);
-		
-		JToggleButton tglbtn_1 = new JToggleButton("");
-		tglbtn_1.setBounds(155, 40, 90, 90);
-		contentPane.add(tglbtn_1);
-		xo(tglbtn_1, lblAccion);
-		
-		JToggleButton tglbtn_2 = new JToggleButton("");
-		tglbtn_2.setBounds(250, 40, 90, 90);
-		contentPane.add(tglbtn_2);
-		xo(tglbtn_2, lblAccion);
-		
-		JToggleButton tglbtn_3 = new JToggleButton("");
-		tglbtn_3.setBounds(60, 135, 90, 90);
-		contentPane.add(tglbtn_3);
-		xo(tglbtn_3, lblAccion);
-		
-		JToggleButton tglbtn_4 = new JToggleButton("");
-		tglbtn_4.setBounds(155, 135, 90, 90);
-		contentPane.add(tglbtn_4);
-		xo(tglbtn_4, lblAccion);
-		
-		JToggleButton tglbtn_5 = new JToggleButton("");
-		tglbtn_5.setBounds(250, 135, 90, 90);
-		contentPane.add(tglbtn_5);
-		xo(tglbtn_5, lblAccion);
-		
-		JToggleButton tglbtn_6 = new JToggleButton("");
-		tglbtn_6.setBounds(60, 230, 90, 90);
-		contentPane.add(tglbtn_6);
-		xo(tglbtn_6, lblAccion);
-		
-		JToggleButton tglbtn_7 = new JToggleButton("");
-		tglbtn_7.setBounds(155, 230, 90, 90);
-		contentPane.add(tglbtn_7);
-		xo(tglbtn_7, lblAccion);
-		
-		JToggleButton tglbtn_8 = new JToggleButton("");
-		tglbtn_8.setBounds(250, 230, 90, 90);
-		contentPane.add(tglbtn_8);
-		xo(tglbtn_8, lblAccion);
-		
-		Game.startGame(lblAccion, tglbtn);
-		Game.buttonOff(tglbtn);
-		Game.buttonOff(tglbtn_1);
-		Game.buttonOff(tglbtn_2);
-		Game.buttonOff(tglbtn_3);
-		Game.buttonOff(tglbtn_4);
-		Game.buttonOff(tglbtn_5);
-		Game.buttonOff(tglbtn_6);
-		Game.buttonOff(tglbtn_7);
-		Game.buttonOff(tglbtn_8);
-		
+		/* TABLERO DE JUEGO */
+		gameBoardGenerator(lblAccion);
+				
 		JButton btnNuevaPartida = new JButton("Nueva Partida");
 		btnNuevaPartida.addActionListener(aL);
 		btnNuevaPartida.setBounds(505, 25, 119, 23);
@@ -199,5 +141,24 @@ public class FramePrincipal extends JFrame {
 				
 			}
 		});
+	}
+	
+	public void gameBoardGenerator(JLabel l) {
+		int px = 60;
+		int py = 60;
+		final int SIZE = 90;
+		
+		JToggleButton[][] tablero = new JToggleButton[3][3];
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				tablero[j][i] = new JToggleButton(i + " " + j);
+				tablero[j][i].setBounds(px, py, SIZE, SIZE);
+				contentPane.add(tablero[j][i]);
+				xo(tablero[j][i], l);
+				px += 95;
+			}
+			px = 60;
+			py += 95;
+		}
 	}
 }
