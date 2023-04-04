@@ -1,5 +1,6 @@
 package m4.games;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -13,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class FramePrincipal extends JFrame {
 
@@ -38,39 +40,57 @@ public class FramePrincipal extends JFrame {
 		
 		JToggleButton tglbtn = new JToggleButton("");
 		tglbtn.setBounds(72, 75, 94, 85);
+		
 		contentPane.add(tglbtn);
+		tglbtn.addActionListener(tL);
 		
 		JToggleButton tglbtn_1 = new JToggleButton("");
 		tglbtn_1.setBounds(173, 75, 94, 85);
+		
 		contentPane.add(tglbtn_1);
+		tglbtn_1.addActionListener(tL);
 		
 		JToggleButton tglbtn_2 = new JToggleButton("");
 		tglbtn_2.setBounds(277, 75, 94, 85);
+		
 		contentPane.add(tglbtn_2);
+		tglbtn_2.addActionListener(tL);
 		
 		JToggleButton tglbtn_3 = new JToggleButton("");
 		tglbtn_3.setBounds(72, 170, 94, 85);
+		
 		contentPane.add(tglbtn_3);
+		tglbtn_3.addActionListener(tL);
 		
 		JToggleButton tglbtn_4 = new JToggleButton("");
 		tglbtn_4.setBounds(173, 170, 94, 85);
+		
 		contentPane.add(tglbtn_4);
+		tglbtn_4.addActionListener(tL);
 		
 		JToggleButton tglbtn_5 = new JToggleButton("");
 		tglbtn_5.setBounds(277, 171, 94, 85);
+		
 		contentPane.add(tglbtn_5);
+		tglbtn_5.addActionListener(tL);
 		
 		JToggleButton tglbtn_6 = new JToggleButton("");
+		
 		tglbtn_6.setBounds(72, 266, 94, 85);
 		contentPane.add(tglbtn_6);
+		tglbtn_6.addActionListener(tL);
 		
 		JToggleButton tglbtn_7 = new JToggleButton("");
 		tglbtn_7.setBounds(173, 266, 94, 85);
+		
 		contentPane.add(tglbtn_7);
+		tglbtn_7.addActionListener(tL);
 		
 		JToggleButton tglbtn_8 = new JToggleButton("");
 		tglbtn_8.setBounds(277, 267, 94, 85);
+		
 		contentPane.add(tglbtn_8);
+		tglbtn_8.addActionListener(tL);
 		
 		JButton btnNuevaPartida = new JButton("Nueva Partida");
 		btnNuevaPartida.addActionListener(aL);
@@ -134,9 +154,22 @@ public class FramePrincipal extends JFrame {
 		
 		setVisible(true);
 	}
+	ActionListener tL = new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+	    	JToggleButton button = (JToggleButton) e.getSource();
+	        if (button.isSelected()) {
+	            button.setIcon(new ImageIcon("src/main/java/m4/games/img/o.png"));
+	        } else {
+	            button.setIcon(new ImageIcon("src/main/java/m4/games/img/x.png"));
+	        }
+	    }
+//	};
 
 	ActionListener aL =new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			
+			System.out.println("prueba1");
+			 
 			
 			
 		}
