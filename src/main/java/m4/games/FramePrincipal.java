@@ -19,10 +19,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JInternalFrame;
 import javax.swing.border.LineBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
 import java.awt.Color;
+import javax.swing.JSeparator;
 
 public class FramePrincipal extends JFrame {
 
@@ -30,7 +28,6 @@ public class FramePrincipal extends JFrame {
 	private JTextField textJug1;
 	private JTextField textJug2;
 	private ButtonGroup jugador = new ButtonGroup();
-	JLabel lblAccion = new JLabel();
 	
 	private int turn = 0;
 
@@ -49,26 +46,21 @@ public class FramePrincipal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		
-		
-		lblAccion = new JLabel("Bienvenido al 3 en raya!");
-		lblAccion.setBounds(427, 80, 226, 14);
-		contentPane.add(lblAccion);
-//		completarAccion(lblAccion);
-		lblAccion.setText("Introduzca el nombre de los jugadores");
+		textJug2 = new JTextField();
+		textJug2.setColumns(10);
+		textJug2.setBounds(505, 309, 96, 20);
+		contentPane.add(textJug2);
 		
 		textJug1 = new JTextField();
 		textJug1.setBounds(510, 162, 96, 20);
 		contentPane.add(textJug1);
 		textJug1.setColumns(10);
-		
-		textJug1.getDocument().addDocumentListener(dL);
-	
-		
-		
-		
-		
-		
+
+
+		JLabel lblAccion = new JLabel("Empieza la partida, turno de");
+		lblAccion.setBounds(427, 80, 226, 14);
+		contentPane.add(lblAccion);
+
 		
 		JToggleButton tglbtn = new JToggleButton("");
 		tglbtn.setBounds(60, 40, 90, 90);
@@ -115,6 +107,17 @@ public class FramePrincipal extends JFrame {
 		contentPane.add(tglbtn_8);
 		xo(tglbtn_8, lblAccion);
 		
+		Game.startGame(lblAccion, tglbtn);
+		Game.buttonOff(tglbtn);
+		Game.buttonOff(tglbtn_1);
+		Game.buttonOff(tglbtn_2);
+		Game.buttonOff(tglbtn_3);
+		Game.buttonOff(tglbtn_4);
+		Game.buttonOff(tglbtn_5);
+		Game.buttonOff(tglbtn_6);
+		Game.buttonOff(tglbtn_7);
+		Game.buttonOff(tglbtn_8);
+		
 		JButton btnNuevaPartida = new JButton("Nueva Partida");
 		btnNuevaPartida.addActionListener(aL);
 		btnNuevaPartida.setBounds(505, 25, 119, 23);
@@ -150,10 +153,7 @@ public class FramePrincipal extends JFrame {
 		lblNombre_2.setBounds(427, 309, 49, 14);
 		contentPane.add(lblNombre_2);
 		
-		textJug2 = new JTextField();
-		textJug2.setColumns(10);
-		textJug2.setBounds(505, 309, 96, 20);
-		contentPane.add(textJug2);
+		
 		
 		JRadioButton rdbtnHumano_1 = new JRadioButton("Humano");
 		rdbtnHumano_1.setBounds(427, 359, 111, 23);
@@ -162,6 +162,10 @@ public class FramePrincipal extends JFrame {
 		JRadioButton rdbtnCPU_1 = new JRadioButton("CPU");
 		rdbtnCPU_1.setBounds(542, 359, 111, 23);
 		contentPane.add(rdbtnCPU_1);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(427, 105, 250, 2);
+		contentPane.add(separator);
 		
 		
 		
@@ -183,10 +187,10 @@ public class FramePrincipal extends JFrame {
 				b.setFont(new Font("Arial", Font.BOLD, 70));
 				if(b.isSelected()) {
 					if (turn%2 == 0) {
-						l.setText("Turno de jugador "+ textJug2.getText());
+						l.setText("Turno de jugador 2");
 						b.setText("X");
 					} else {
-						l.setText("Turno de jugador "+ textJug1.getText());
+						l.setText("Turno de jugador 1");
 						b.setText("O");
 					}
 				}
@@ -196,23 +200,4 @@ public class FramePrincipal extends JFrame {
 			}
 		});
 	}
-	
-	DocumentListener dL = new DocumentListener() {
-	    @Override
-	    public void changedUpdate(DocumentEvent e) {
-	        updateLabel();
-	    }
-	    @Override
-	    public void insertUpdate(DocumentEvent e) {
-	        updateLabel();
-	    }
-	    @Override
-	    public void removeUpdate(DocumentEvent e) {
-	        updateLabel();
-	    }
-	    
-	    private void updateLabel() {
-	        lblAccion.setText("Empieza el/la jugador/a: "+textJug1.getText());
-	    }
-	};
 }
