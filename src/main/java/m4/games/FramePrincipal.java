@@ -45,25 +45,14 @@ public class FramePrincipal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-<<<<<<< HEAD
-		textJug2 = new JTextField();
-		textJug2.setColumns(10);
-		textJug2.setBounds(505, 309, 96, 20);
-		contentPane.add(textJug2);
-		
-=======
->>>>>>> ba9c3a2895aea6606b860a66bdefefc984726ee4
 		textJug1 = new JTextField();
 		textJug1.setBounds(510, 162, 96, 20);
 		contentPane.add(textJug1);
 		textJug1.setColumns(10);
 		
-<<<<<<< HEAD
-=======
 		JLabel lblAccion = new JLabel("Empieza la partida, turno de " + textJug1.getText());
 		lblAccion.setBounds(427, 80, 226, 14);
 		contentPane.add(lblAccion);
->>>>>>> ba9c3a2895aea6606b860a66bdefefc984726ee4
 		
 		JToggleButton tglbtn = new JToggleButton("");
 		tglbtn.setBounds(60, 40, 90, 90);
@@ -115,22 +104,10 @@ public class FramePrincipal extends JFrame {
 		btnNuevaPartida.setBounds(505, 25, 119, 23);
 		contentPane.add(btnNuevaPartida);
 		
-<<<<<<< HEAD
-		JLabel lblAccion = new JLabel(textJug1.getText() +", coloca ficha ...");
-		lblAccion.setBounds(427, 80, 226, 14);
-		contentPane.add(lblAccion);
-		
-=======
->>>>>>> ba9c3a2895aea6606b860a66bdefefc984726ee4
 		JLabel lblJugador1 = new JLabel("Jugador 1:");
 		lblJugador1.setBounds(427, 124, 88, 14);
 		contentPane.add(lblJugador1);
 		
-<<<<<<< HEAD
-		
-		
-=======
->>>>>>> ba9c3a2895aea6606b860a66bdefefc984726ee4
 		JLabel lblNombre = new JLabel("");
 		lblNombre.setBounds(427, 170, 49, 14);
 		contentPane.add(lblNombre);
@@ -157,7 +134,10 @@ public class FramePrincipal extends JFrame {
 		lblNombre_2.setBounds(427, 309, 49, 14);
 		contentPane.add(lblNombre_2);
 		
-		
+		textJug2 = new JTextField();
+		textJug2.setColumns(10);
+		textJug2.setBounds(505, 309, 96, 20);
+		contentPane.add(textJug2);
 		
 		JRadioButton rdbtnHumano_1 = new JRadioButton("Humano");
 		rdbtnHumano_1.setBounds(427, 359, 111, 23);
@@ -187,10 +167,10 @@ public class FramePrincipal extends JFrame {
 				b.setFont(new Font("Arial", Font.BOLD, 70));
 				if(b.isSelected()) {
 					if (turn%2 == 0) {
-						l.setText("Turno de jugador 2");
+						l.setText("Turno de jugador "+ textJug2.getText());
 						b.setText("X");
 					} else {
-						l.setText("Turno de jugador 1");
+						l.setText("Turno de jugador "+ textJug1.getText());
 						b.setText("O");
 					}
 				}
