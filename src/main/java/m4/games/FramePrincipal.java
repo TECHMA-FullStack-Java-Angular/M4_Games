@@ -6,14 +6,20 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JToggleButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FramePrincipal extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textJug1;
+	private JTextField textJug2;
+	private ButtonGroup jugador = new ButtonGroup();
 
 
 
@@ -67,6 +73,7 @@ public class FramePrincipal extends JFrame {
 		contentPane.add(tglbtn_8);
 		
 		JButton btnNuevaPartida = new JButton("Nueva Partida");
+		btnNuevaPartida.addActionListener(aL);
 		btnNuevaPartida.setBounds(505, 25, 119, 23);
 		contentPane.add(btnNuevaPartida);
 		
@@ -83,9 +90,44 @@ public class FramePrincipal extends JFrame {
 		contentPane.add(textJug1);
 		textJug1.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(427, 168, 49, 14);
-		contentPane.add(lblNewLabel);
+		JLabel lblNombre = new JLabel("");
+		lblNombre.setBounds(427, 170, 49, 14);
+		contentPane.add(lblNombre);
+		
+		JLabel lblNewLabel_1 = new JLabel("Nombre:");
+		lblNewLabel_1.setBounds(427, 170, 49, 14);
+		contentPane.add(lblNewLabel_1);
+		
+		JRadioButton rdbtnHumano = new JRadioButton("Humano");
+		rdbtnHumano.setBounds(427, 218, 111, 23);
+		contentPane.add(rdbtnHumano);
+		jugador.add(rdbtnHumano);
+		
+		JRadioButton rdbtnCPU = new JRadioButton("CPU");
+		rdbtnCPU.setBounds(567, 218, 111, 23);
+		contentPane.add(rdbtnCPU);
+		jugador.add(rdbtnCPU);
+		
+		JLabel lblJugador2 = new JLabel("Jugador 2:");
+		lblJugador2.setBounds(427, 284, 88, 14);
+		contentPane.add(lblJugador2);
+		
+		JLabel lblNombre_2 = new JLabel("Nombre:");
+		lblNombre_2.setBounds(427, 309, 49, 14);
+		contentPane.add(lblNombre_2);
+		
+		textJug2 = new JTextField();
+		textJug2.setColumns(10);
+		textJug2.setBounds(505, 309, 96, 20);
+		contentPane.add(textJug2);
+		
+		JRadioButton rdbtnHumano_1 = new JRadioButton("Humano");
+		rdbtnHumano_1.setBounds(427, 359, 111, 23);
+		contentPane.add(rdbtnHumano_1);
+		
+		JRadioButton rdbtnCPU_1 = new JRadioButton("CPU");
+		rdbtnCPU_1.setBounds(542, 359, 111, 23);
+		contentPane.add(rdbtnCPU_1);
 		
 		
 		
@@ -93,4 +135,10 @@ public class FramePrincipal extends JFrame {
 		setVisible(true);
 	}
 
+	ActionListener aL =new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+			
+		}
+	};
 }
