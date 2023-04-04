@@ -185,12 +185,12 @@ public class FramePrincipal extends JFrame {
 			if (turn%2 == 0) {
 				lblAccion.setText("Turno de jugador " + textJug2.getText());
 				b.setText("X");
-				b.setEnabled(false);
+				//b.setEnabled(false);
 				turn++;
 			} else if (turn%2 != 0) {
 				lblAccion.setText("Turno de jugador " + textJug1.getText());
 				b.setText("O");
-				b.setEnabled(false);
+				//b.setEnabled(false);
 				turn++;
 			} else {
 				for (int i = 0; i < listaBotones.size(); i++) {
@@ -200,6 +200,8 @@ public class FramePrincipal extends JFrame {
 				}
 			}
 		}
+		if (ganador()) return;
+		check_cpu_turn();
 	}
 
 	
