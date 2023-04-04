@@ -38,6 +38,7 @@ public class FramePrincipal extends JFrame {
 	JRadioButton rdbtnCPU_1, rdbtnCPU_2;
 
 	private int turn = 0;
+	
 
 	/**
 	 * Create the frame.
@@ -180,58 +181,50 @@ public class FramePrincipal extends JFrame {
 	}
 
 	private void xo(JToggleButton b) {
+		int vuelta=0;
+		
+
 		b.setFont(new Font("Arial", Font.BOLD, 70));
 		if (b.isSelected()) {
 			if (turn % 2 == 0 && turn <= 5) {
 				lblAccion.setText("Turno de jugador " + textJug2.getText());
 				b.setText("X");
-				// b.setEnabled(false);
+				b.setEnabled(false);
 				turn++;
 			} else if (turn % 2 != 0 && turn <= 5) {
 				lblAccion.setText("Turno de jugador " + textJug1.getText());
 				b.setText("O");
-				// b.setEnabled(false);
+				b.setEnabled(false);
 				turn++;
-			} else if (turn % 2 == 0 && turn == 6) {
+			} else if (turn % 2 == 0 && turn > 5) {
 				for (int i = 0; i < listaBotones.size(); i++) {
 
-					if (listaBotones.get(i).getText() == "X") {
-						listaBotones.get(i).setEnabled(true);
-						listaBotones.get(i).setSelected(false);
-						
+					listaBotones.get(listaBotones.size() - 1).setEnabled(true);
+					listaBotones.get(listaBotones.size() - 1).setSelected(false);
+					listaBotones.get(listaBotones.size() - 1).setText("");
+					b.setText("X");
+					b.setEnabled(false);
 
-					} else {
-						listaBotones.get(i).setEnabled(false);
-					}
-
+					vuelta++;
+					turn++;
 				}
 
-			} else if (turn % 2 != 0 && turn == 7) {
+			} else if (turn % 2 != 0 && turn > 5) {
 				for (int i = 0; i < listaBotones.size(); i++) {
-					if (listaBotones.get(i).getText() == "O") {
-						listaBotones.get(i).setEnabled(true);
-						listaBotones.get(i).setSelected(false);
-						
 
-					} else {
-						listaBotones.get(i).setEnabled(false);
-					}
+					listaBotones.get(listaBotones.size() - 2).setEnabled(true);
+					listaBotones.get(listaBotones.size() - 2).setSelected(false);
+					listaBotones.get(listaBotones.size() - 2).setText("");
+					b.setText("O");
+					b.setEnabled(false);
+
+					turn++;
+
 				}
-				
-					
-				}
-//				else if( turn%2 ==0 && turn> 6) {
-//			if(b.isSelected()) {
-//				System.out.println("prueba");
-//				b.setText("");
-//				for (int i = 0; i < listaBotones.size(); i++) {
-//					listaBotones.get(i).setEnabled(true);
-//				}
-//			}
-//
-//			}
-			
-			
+
+			}
+
+
 		}
 		if (ganador())
 			return;
