@@ -155,14 +155,6 @@ public class FramePrincipal extends JFrame {
 			if (textJug1.getText().isEmpty() || textJug2.getText().isEmpty()) {
 				lblAccion.setText("Introduce los nombres de los jugadores");
 			}
-<<<<<<< HEAD
-
-			for (int i = 0; i < listaBotones.size(); i++) {
-				listaBotones.get(i).setEnabled(true);
-
-			}
-			turn = 0;
-=======
 			//else if (rdbtnCPU.isSelected && rdnbtn)
 			else {
 				for (int i = 0; i < listaBotones.size(); i++) {
@@ -173,47 +165,14 @@ public class FramePrincipal extends JFrame {
 				}
 				turn=0;
 			}
->>>>>>> ce1f226176b8a3ef61e8ba16de9b679268aef78f
 		}
 
 	};
 
-<<<<<<< HEAD
-	public void xo(JToggleButton b, JLabel l) {
-		b.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				b.setFont(new Font("Arial", Font.BOLD, 70));
-				if (b.isSelected()) {
-
-					if (turn % 2 == 0 && turn < 5) {
-						l.setText("Turno de jugador " + textJug2.getText());
-						b.setText("X");
-						b.setEnabled(false);
-						turn++;
-					} else if (turn % 2 != 0 && turn <= 5) {
-						l.setText("Turno de jugador " + textJug1.getText());
-						b.setText("O");
-						b.setEnabled(false);
-						turn++;
-					} else {
-						for (int i = 0; i < listaBotones.size(); i++) {
-							listaBotones.get(i).setEnabled(false);
-							listaBotones.get(i).setSelected(false);
-
-						}
-
-					}
-				}
-
-			}
-		});
-=======
 	public boolean ganador() {
 		// si hay un ganador lo mustra por pantalla y reorna true
 		// si no hay ganador retorna false
 		return true;
->>>>>>> ce1f226176b8a3ef61e8ba16de9b679268aef78f
 	}
 
 	public void check_cpu_turn() {
