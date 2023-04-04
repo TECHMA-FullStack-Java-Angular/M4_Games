@@ -10,9 +10,5 @@ public class Game {
 		
 	}
 
-	public static void buttonOff(JToggleButton tglbtn) {
-		tglbtn.setEnabled(false);
-		
-	}
 
 }
