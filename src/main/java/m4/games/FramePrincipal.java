@@ -20,6 +20,10 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JInternalFrame;
 import javax.swing.border.LineBorder;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
+
 import java.awt.Color;
 import java.awt.Component;
 
@@ -182,49 +186,35 @@ public class FramePrincipal extends JFrame {
 
 	private void xo(JToggleButton b) {
 		int vuelta=0;
-		
-
 		b.setFont(new Font("Arial", Font.BOLD, 70));
 		if (b.isSelected()) {
-			if (turn % 2 == 0 && turn <= 5) {
+			if (turn%2 == 0) {
 				lblAccion.setText("Turno de jugador " + textJug2.getText());
 				b.setText("X");
 				b.setEnabled(false);
 				turn++;
-			} else if (turn % 2 != 0 && turn <= 5) {
+				if (turn >= 6) {
+					for (JToggleButton btn : listaBotones) {
+						btn.setEnabled(btn.getText() == "O");
+					}
+				}
+			} else {
 				lblAccion.setText("Turno de jugador " + textJug1.getText());
 				b.setText("O");
 				b.setEnabled(false);
 				turn++;
-			} else if (turn % 2 == 0 && turn > 5) {
-				for (int i = 0; i < listaBotones.size(); i++) {
-
-					listaBotones.get(listaBotones.size() - 1).setEnabled(true);
-					listaBotones.get(listaBotones.size() - 1).setSelected(false);
-					listaBotones.get(listaBotones.size() - 1).setText("");
-					b.setText("X");
-					b.setEnabled(false);
-
-					vuelta++;
-					turn++;
+				if (turn >= 6) {
+					for (JToggleButton btn : listaBotones) {
+						btn.setEnabled(btn.getText() == "X");
+					}
 				}
-
-			} else if (turn % 2 != 0 && turn > 5) {
-				for (int i = 0; i < listaBotones.size(); i++) {
-
-					listaBotones.get(listaBotones.size() - 2).setEnabled(true);
-					listaBotones.get(listaBotones.size() - 2).setSelected(false);
-					listaBotones.get(listaBotones.size() - 2).setText("");
-					b.setText("O");
-					b.setEnabled(false);
-
-					turn++;
-
-				}
-
 			}
-
-
+		}
+		else {
+			b.setText("");
+			for (JToggleButton btn : listaBotones) {
+				btn.setEnabled(btn.getText() == "");
+			}
 		}
 		if (ganador())
 			return;
