@@ -293,11 +293,12 @@ public class FramePrincipal extends JFrame {
 		String me = player == 0 ? "X":"O";
 		//String they = player == 1 ? "X":"0";
 		int[] one2win = null;
-		int[] one2lose = null;
+		int[] one2loose = null;
 		int[] doubleTwo2win = null;
-		int[] doubleTwo2lose = null;
+		int[] doubleTwo2loose = null;
 		ArrayList<int[]> two2win = new ArrayList<>();
-		ArrayList<int[]> two2lose = new ArrayList<>();
+		ArrayList<int[]> two2loose = new ArrayList<>();
+		boolean willLoose = false;
 		for (int[][] three : threes) {
 			ArrayList<int[]> list_empty = new ArrayList<>();
 			int n_empty = 0;
@@ -313,9 +314,15 @@ public class FramePrincipal extends JFrame {
 				else n_they++;
 			}
 			// If I move to the empty slot I win
-			if (n_me == 2 && n_empty == 1) {one2win = list_empty.get(0); break;}
+			if (n_me == 2 && n_empty == 1) {
+				one2win = list_empty.get(0);
+				break;
+			}
 			// If they move to the empty slot, they'll win. So I have to block it.
-			else if (n_they == 2 && n_empty == 1) one2lose = list_empty.get(0);
+			else if (n_they == 2 && n_empty == 1) {
+				if (one2loose == null) one2loose = list_empty.get(0);
+				else willLoose = true;
+			}
 			else if (n_me == 1 && n_empty == 2) {
 				for (int[] pos : list_empty) {
 					// If I move to the empty slot I'll have 2 options to win
@@ -328,15 +335,22 @@ public class FramePrincipal extends JFrame {
 					// If they moved to the empty slot they'd have 2 options to win
 					// I could only bock one so I they'd win.
 					// So I have to block the empty slot
-					if (contains(two2lose, pos)) doubleTwo2lose = pos;
-					else two2lose.add(pos);
+					if (contains(two2loose, pos)) {
+						if (doubleTwo2loose == null) doubleTwo2loose = pos; 
+						else willLoose = true;
+					}
+					else two2loose.add(pos);
 				}
 			}
 		}
-		if (one2win != null) return new Choice(1,getFromTablero(one2win));
-		if (one2lose != null) return new Choice(3,getFromTablero(one2lose));
-		if (doubleTwo2win != null) return new Choice(2,getFromTablero(doubleTwo2win));
-		if (doubleTwo2lose != null) return new Choice(3,getFromTablero(doubleTwo2lose));
+		if (one2win != null) 
+			return new Choice(1, getFromTablero(one2win));
+		if (one2loose != null) 
+			return new Choice(willLoose?15:5, getFromTablero(one2loose));
+		if (doubleTwo2win != null)
+			return new Choice(2, getFromTablero(doubleTwo2win));
+		if (doubleTwo2loose != null) 
+			return new Choice(willLoose?14:4, getFromTablero(doubleTwo2loose));
 		int[][] priority = {{1,1},{0,0},{0,2},{2,0},{2,2},{0,1},{1,0},{1,2},{2,1}};
 		for (int[] pos : priority) {
 				if (getFromTablero(pos).getText() == "") 
