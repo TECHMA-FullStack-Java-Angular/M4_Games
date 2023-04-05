@@ -167,13 +167,7 @@ public class FramePrincipal extends JFrame {
 	ActionListener inicio_partida = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
-			if (rdbLlenarTablero.isSelected()) {
-				rdb3fichas.setSelected(false);
-				llenar_tablero = true;
-			}else if(rdb3fichas.isSelected()){
-				rdbLlenarTablero.setSelected(false);
-				llenar_tablero = false;
-			}
+			llenar_tablero = rdbLlenarTablero.isSelected();
 			
 			if (textJug1.getText().isEmpty() || textJug2.getText().isEmpty()) {
 				lblAccion.setText("¡Introduce los nombres de los jugadores!");
@@ -190,7 +184,6 @@ public class FramePrincipal extends JFrame {
 				turn=0;
 				check_cpu_turn();
 			}
-			// llenar_tablero = drbtnLlenarTablero.isSelected();
 		}
 
 	};
