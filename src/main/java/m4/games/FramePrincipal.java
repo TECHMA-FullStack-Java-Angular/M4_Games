@@ -337,7 +337,7 @@ public class FramePrincipal extends JFrame {
 		//if button is selected
 		if (b.isSelected()) {
 			
-			//action to perform if it is the turn of the second player
+			//action to perform if it is the turn of the first player
 			if (turn%2 == 0) {
 				lblAccion.setText("Turno de jugador " + textJug2.getText());
 				//this player uses the X and disables the button when selecting it
@@ -351,7 +351,7 @@ public class FramePrincipal extends JFrame {
 						btn.setEnabled(btn.getText() == "O");
 					}
 				}
-				//If not,is the turn of the first player 
+				//If not,is the turn of the second player 
 			} else {
 				lblAccion.setText("Turno de jugador " + textJug1.getText());
 				//this player uses the O and disables the button when selecting it
