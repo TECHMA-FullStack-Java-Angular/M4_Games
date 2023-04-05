@@ -1,5 +1,5 @@
 # M4_Games
-### Juego realizado por Team 6 - Joan (jlapeyra), Javier (jvprz) y Paula (PaulaSousa2014).
+### Juego realizado por Team 6 - Joan (@jlapeyra), Javier (@jvprz) y Paula (@PaulaSousa2014).
 
 Tres en raya con 2 modalidades de juego:
 
