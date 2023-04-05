@@ -17,17 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Set;
 import java.awt.event.ActionEvent;
-import javax.swing.JInternalFrame;
-import javax.swing.border.LineBorder;
-
-import javafx.util.Pair;
-
-import java.awt.Color;
-import java.awt.Component;
-
 import javax.swing.JSeparator;
 
 public class FramePrincipal extends JFrame {
@@ -44,6 +34,8 @@ public class FramePrincipal extends JFrame {
 	JRadioButton rdbtnCPU_1, rdbtnCPU_2;
 
 	private int turn = 0;
+	boolean llenar_tablero = false;
+	
 
 	/**
 	 * Create the frame.
@@ -121,7 +113,6 @@ public class FramePrincipal extends JFrame {
 		contentPane.add(rdbtnCPU_2);
 		jugador2.add(rdbtnCPU_2);
 
-
 		JSeparator separator = new JSeparator();
 		separator.setBounds(427, 124, 250, 2);
 		contentPane.add(separator);
@@ -163,6 +154,7 @@ public class FramePrincipal extends JFrame {
 			py += 95;
 		}
 	}
+
 	public void set_xo_listener(JToggleButton b) {
 		b.addItemListener(new ItemListener() {
 			@Override
@@ -189,6 +181,7 @@ public class FramePrincipal extends JFrame {
 				turn=0;
 				check_cpu_turn();
 			}
+			// llenar_tablero = drbtnLlenarTablero.isSelected();
 		}
 
 	};
@@ -261,24 +254,47 @@ public class FramePrincipal extends JFrame {
 			//xo(btn);
 		}
 	}
- 
+
 	private void xo(JToggleButton b) {
+		int vuelta=0;
 		b.setFont(new Font("Arial", Font.BOLD, 70));
 		if (b.isSelected()) {
 			if (turn%2 == 0) {
 				lblAccion.setText("Turno de jugador " + textJug2.getText());
 				b.setText("X");
 				b.setEnabled(false);
+				b.setEnabled(false);
 				turn++;
+				if (turn >= 6 && !llenar_tablero) {
+					for (JToggleButton btn : listaBotones) {
+						btn.setEnabled(btn.getText() == "O");
+					}
+				}
 			} else {
 				lblAccion.setText("Turno de jugador " + textJug1.getText());
 				b.setText("O");
 				b.setEnabled(false);
-				turn++;
+				b.setEnabled(false);
+				turn++; 
+				if (turn >= 6 && !llenar_tablero) {
+					for (JToggleButton btn : listaBotones) {
+						btn.setEnabled(btn.getText() == "X");
+					}
+				}
 			}
-			//if (ganador()) return;
-			check_cpu_turn();
 		}
-		
+		else {
+			b.setText("");
+			for (JToggleButton btn : listaBotones) {
+				btn.setEnabled(btn.getText() == "");
+			}
+		}
+		if (ganador())
+			return;
+		check_cpu_turn();
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 33fd0d3d326e7d8ee382010324dd3b03778173dc
 }
