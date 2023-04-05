@@ -186,10 +186,69 @@ public class FramePrincipal extends JFrame {
 
 	};
 
+	/**
+	 * This method checks of any player wins
+	 * @return winner state
+	 */
 	public boolean ganador() {
-		// si hay un ganador lo mustra por pantalla y reorna true
-		// si no hay ganador retorna false
-		return false;
+		
+		// Winner dafault state
+		boolean winner = false;
+		
+		// WINNER PLAYER ONE
+		for (int i = 0; i < 3; i++) {
+			// Check rows
+			if(tablero[i][0].getText().equals("X") && tablero[i][1].getText().equals("X") && tablero[i][2].getText().equals("X")){
+				lblAccion.setText("El jugador " + textJug1.getText() + " ha ganado.");
+				winner = true;
+			}
+			// Check columns
+			if(tablero[0][i].getText().equals("X") && tablero[1][i].getText().equals("X") && tablero[2][i].getText().equals("X")){
+				lblAccion.setText("El jugador " + textJug1.getText() + " ha ganado.");
+				winner = true;
+			}
+		}
+		// Check diagonals
+		if (tablero[0][0].getText().equals("X") && tablero[1][1].getText().equals("X") && tablero[2][2].getText().equals("X")) {
+			lblAccion.setText("El jugador " + textJug1.getText() + " ha ganado.");
+			winner = true;
+		}
+		if (tablero[0][2].getText().equals("X") && tablero[1][1].getText().equals("X") && tablero[2][0].getText().equals("X")) {
+			lblAccion.setText("El jugador " + textJug1.getText() + " ha ganado.");
+			winner = true;
+		}
+		
+		// WINNER PLAYER TWO
+				for (int j = 0; j < 3; j++) {
+					// Check rows
+					if(tablero[j][0].getText().equals("O") && tablero[j][1].getText().equals("O") && tablero[j][2].getText().equals("O")){
+						lblAccion.setText("El jugador " + textJug2.getText() + " ha ganado.");
+						winner = true;
+					}
+					// Check columns
+					if(tablero[0][j].getText().equals("O") && tablero[1][j].getText().equals("O") && tablero[2][j].getText().equals("O")){
+						lblAccion.setText("El jugador " + textJug2.getText() + " ha ganado.");
+						winner = true;
+					}
+				}
+				// Check diagonals
+				if (tablero[0][0].getText().equals("O") && tablero[1][1].getText().equals("O") && tablero[2][2].getText().equals("O")) {
+					lblAccion.setText("El jugador " + textJug2.getText() + " ha ganado.");
+					winner = true;
+				}
+				if (tablero[0][2].getText().equals("O") && tablero[1][1].getText().equals("O") && tablero[2][0].getText().equals("O")) {
+					lblAccion.setText("El jugador " + textJug2.getText() + " ha ganado.");
+					winner = true;
+				}
+		// Winner stop the game		
+		if (winner) {
+			for (JToggleButton btn : listaBotones) {
+			    btn.setEnabled(false);
+			}
+		}
+		
+		// Return result
+		return winner;
 	}
 
 	int threes[][][] = {{{0,0},{0,1},{0,2}}, {{1,0},{1,1},{1,2}}, {{2,0},{2,1},{2,2}},
@@ -293,8 +352,4 @@ public class FramePrincipal extends JFrame {
 			return;
 		check_cpu_turn();
 	}
-<<<<<<< HEAD
-=======
-
->>>>>>> 33fd0d3d326e7d8ee382010324dd3b03778173dc
 }
