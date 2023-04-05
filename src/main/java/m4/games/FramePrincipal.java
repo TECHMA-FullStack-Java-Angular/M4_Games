@@ -365,6 +365,7 @@ public class FramePrincipal extends JFrame {
 		}
 		if (ganador())
 			return;
+		if(llenar_tablero && turn >=9)lblAccion.setText("El juego ha terminado");
 		check_cpu_turn();
 	}
 
