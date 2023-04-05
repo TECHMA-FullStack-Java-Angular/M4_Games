@@ -17,21 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Set;
 import java.awt.event.ActionEvent;
-import javax.swing.JInternalFrame;
-import javax.swing.border.LineBorder;
-
-import javafx.scene.control.Button;
-import javafx.scene.control.ToggleButton;
-
-
-import javafx.util.Pair;
-
-import java.awt.Color;
-import java.awt.Component;
-
 import javax.swing.JSeparator;
 
 public class FramePrincipal extends JFrame {
@@ -47,6 +33,7 @@ public class FramePrincipal extends JFrame {
 	JRadioButton rdbtnCPU_1, rdbtnCPU_2;
 
 	private int turn = 0;
+	boolean llenar_tablero = false;
 	
 
 	/**
@@ -177,6 +164,7 @@ public class FramePrincipal extends JFrame {
 				turn=0;
 				check_cpu_turn();
 			}
+			// llenar_tablero = drbtnLlenarTablero.isSelected();
 		}
 
 	};
@@ -260,7 +248,7 @@ public class FramePrincipal extends JFrame {
 				b.setEnabled(false);
 				b.setEnabled(false);
 				turn++;
-				if (turn >= 6) {
+				if (turn >= 6 && !llenar_tablero) {
 					for (JToggleButton btn : listaBotones) {
 						btn.setEnabled(btn.getText() == "O");
 					}
@@ -271,7 +259,7 @@ public class FramePrincipal extends JFrame {
 				b.setEnabled(false);
 				b.setEnabled(false);
 				turn++;
-				if (turn >= 6) {
+				if (turn >= 6 && !llenar_tablero) {
 					for (JToggleButton btn : listaBotones) {
 						btn.setEnabled(btn.getText() == "X");
 					}
