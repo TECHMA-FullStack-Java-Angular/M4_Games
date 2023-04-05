@@ -374,9 +374,12 @@ public class FramePrincipal extends JFrame {
 				btn.setEnabled(btn.getText() == "");
 			}
 		}
+		//a call to ganador to check the winner
 		if (ganador())
 			return;
+		//Ends the game if all buttons are used
 		if(llenar_tablero && turn >=9)lblAccion.setText("El juego ha terminado.");
+		//call for cpu turns
 		check_cpu_turn();
 	}
 
