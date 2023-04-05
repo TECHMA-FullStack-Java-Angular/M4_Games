@@ -27,10 +27,11 @@ public class FramePrincipal extends JFrame {
 	private JTextField textJug2;
 	private ButtonGroup jugador1 = new ButtonGroup();
 	private ButtonGroup jugador2 = new ButtonGroup();
+	private ButtonGroup modalidadJuego = new ButtonGroup();
 	private ArrayList<JToggleButton> listaBotones = new ArrayList<JToggleButton>();
 	JToggleButton[][] tablero = new JToggleButton[3][3];
 	JLabel lblAccion;
-	JRadioButton rdbtnCPU_1, rdbtnCPU_2;
+	JRadioButton rdbtnCPU_1, rdbtnCPU_2, rdb3fichas, rdbLlenarTablero;
 
 	private int turn = 0;
 	boolean llenar_tablero = true;
@@ -42,7 +43,7 @@ public class FramePrincipal extends JFrame {
 	public FramePrincipal() {
 		setTitle("3 en raya");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 721, 480);
+		setBounds(100, 100, 721, 531);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -55,23 +56,23 @@ public class FramePrincipal extends JFrame {
 		contentPane.add(textJug2);
 
 		textJug1 = new JTextField();
-		textJug1.setBounds(510, 162, 96, 20);
+		textJug1.setBounds(517, 170, 96, 20);
 		contentPane.add(textJug1);
 		textJug1.setColumns(10);
 
 		lblAccion = new JLabel("Introduce los nombres de los jugadores");
-		lblAccion.setBounds(427, 80, 226, 14);
+		lblAccion.setBounds(427, 99, 226, 14);
 		contentPane.add(lblAccion);
 
 		gameBoardGenerator();
 
 		JButton btnNuevaPartida = new JButton("Nueva Partida");
 		btnNuevaPartida.addActionListener(inicio_partida);
-		btnNuevaPartida.setBounds(505, 25, 119, 23);
+		btnNuevaPartida.setBounds(506, 425, 119, 23);
 		contentPane.add(btnNuevaPartida);
 
 		JLabel lblJugador1 = new JLabel("Jugador 1:");
-		lblJugador1.setBounds(427, 124, 88, 14);
+		lblJugador1.setBounds(427, 137, 88, 14);
 		contentPane.add(lblJugador1);
 
 		JLabel lblNombre = new JLabel("");
@@ -113,8 +114,24 @@ public class FramePrincipal extends JFrame {
 		jugador2.add(rdbtnCPU_2);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(427, 105, 250, 2);
+		separator.setBounds(427, 124, 250, 2);
 		contentPane.add(separator);
+		
+		rdb3fichas = new JRadioButton("3 fichas");
+		rdb3fichas.setSelected(true);
+		rdb3fichas.setBounds(427, 56, 111, 23);
+		contentPane.add(rdb3fichas);
+		modalidadJuego.add(rdb3fichas);
+		
+		rdbLlenarTablero = new JRadioButton("Llenar tablero");
+		rdbLlenarTablero.setSelected(true);
+		rdbLlenarTablero.setBounds(567, 56, 111, 23);
+		contentPane.add(rdbLlenarTablero);
+		modalidadJuego.add(rdbLlenarTablero);
+		
+		JLabel lblModalidadJuego = new JLabel("Seleccione una modalidad de juego");
+		lblModalidadJuego.setBounds(427, 24, 251, 14);
+		contentPane.add(lblModalidadJuego);
 
 		setVisible(true);
 	}
@@ -149,6 +166,15 @@ public class FramePrincipal extends JFrame {
 
 	ActionListener inicio_partida = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			
+			if (rdbLlenarTablero.isSelected()) {
+				rdb3fichas.setSelected(false);
+				llenar_tablero = true;
+			}else if(rdb3fichas.isSelected()){
+				rdbLlenarTablero.setSelected(false);
+				llenar_tablero = false;
+			}
+			
 			if (textJug1.getText().isEmpty() || textJug2.getText().isEmpty()) {
 				lblAccion.setText("¡Introduce los nombres de los jugadores!");
 			}
@@ -169,10 +195,69 @@ public class FramePrincipal extends JFrame {
 
 	};
 
+	/**
+	 * This method checks of any player wins
+	 * @return winner state
+	 */
 	public boolean ganador() {
-		// si hay un ganador lo mustra por pantalla y reorna true
-		// si no hay ganador retorna false
-		return false;
+		
+		// Winner dafault state
+		boolean winner = false;
+		
+		// WINNER PLAYER ONE
+		for (int i = 0; i < 3; i++) {
+			// Check rows
+			if(tablero[i][0].getText().equals("X") && tablero[i][1].getText().equals("X") && tablero[i][2].getText().equals("X")){
+				lblAccion.setText("El jugador " + textJug1.getText() + " ha ganado.");
+				winner = true;
+			}
+			// Check columns
+			if(tablero[0][i].getText().equals("X") && tablero[1][i].getText().equals("X") && tablero[2][i].getText().equals("X")){
+				lblAccion.setText("El jugador " + textJug1.getText() + " ha ganado.");
+				winner = true;
+			}
+		}
+		// Check diagonals
+		if (tablero[0][0].getText().equals("X") && tablero[1][1].getText().equals("X") && tablero[2][2].getText().equals("X")) {
+			lblAccion.setText("El jugador " + textJug1.getText() + " ha ganado.");
+			winner = true;
+		}
+		if (tablero[0][2].getText().equals("X") && tablero[1][1].getText().equals("X") && tablero[2][0].getText().equals("X")) {
+			lblAccion.setText("El jugador " + textJug1.getText() + " ha ganado.");
+			winner = true;
+		}
+		
+		// WINNER PLAYER TWO
+				for (int j = 0; j < 3; j++) {
+					// Check rows
+					if(tablero[j][0].getText().equals("O") && tablero[j][1].getText().equals("O") && tablero[j][2].getText().equals("O")){
+						lblAccion.setText("El jugador " + textJug2.getText() + " ha ganado.");
+						winner = true;
+					}
+					// Check columns
+					if(tablero[0][j].getText().equals("O") && tablero[1][j].getText().equals("O") && tablero[2][j].getText().equals("O")){
+						lblAccion.setText("El jugador " + textJug2.getText() + " ha ganado.");
+						winner = true;
+					}
+				}
+				// Check diagonals
+				if (tablero[0][0].getText().equals("O") && tablero[1][1].getText().equals("O") && tablero[2][2].getText().equals("O")) {
+					lblAccion.setText("El jugador " + textJug2.getText() + " ha ganado.");
+					winner = true;
+				}
+				if (tablero[0][2].getText().equals("O") && tablero[1][1].getText().equals("O") && tablero[2][0].getText().equals("O")) {
+					lblAccion.setText("El jugador " + textJug2.getText() + " ha ganado.");
+					winner = true;
+				}
+		// Winner stop the game		
+		if (winner) {
+			for (JToggleButton btn : listaBotones) {
+			    btn.setEnabled(false);
+			}
+		}
+		
+		// Return result
+		return winner;
 	}
 
 	int threes[][][] = {{{0,0},{0,1},{0,2}}, {{1,0},{1,1},{1,2}}, {{2,0},{2,1},{2,2}},
@@ -252,7 +337,7 @@ public class FramePrincipal extends JFrame {
 	}
 
 	private void xo(JToggleButton b) {
-		int vuelta=0;
+		
 		b.setFont(new Font("Arial", Font.BOLD, 70));
 		if (b.isSelected()) {
 			if (turn%2 == 0) {
