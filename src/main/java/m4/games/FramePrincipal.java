@@ -31,7 +31,7 @@ public class FramePrincipal extends JFrame {
 	private ArrayList<JToggleButton> listaBotones = new ArrayList<JToggleButton>();
 	JToggleButton[][] tablero = new JToggleButton[3][3];
 	JLabel lblAccion;
-	JRadioButton rdbtnCPU_1, rdbtnCPU_2;
+	JRadioButton rdbtnCPU_1, rdbtnCPU_2, rdb3fichas, rdbLlenarTablero;
 
 	private int turn = 0;
 	boolean llenar_tablero = false;
@@ -117,13 +117,13 @@ public class FramePrincipal extends JFrame {
 		separator.setBounds(427, 124, 250, 2);
 		contentPane.add(separator);
 		
-		JRadioButton rdb3fichas = new JRadioButton("3 fichas");
+		rdb3fichas = new JRadioButton("3 fichas");
 		rdb3fichas.setSelected(true);
 		rdb3fichas.setBounds(427, 56, 111, 23);
 		contentPane.add(rdb3fichas);
 		modalidadJuego.add(rdb3fichas);
 		
-		JRadioButton rdbLlenarTablero = new JRadioButton("Llenar tablero");
+		rdbLlenarTablero = new JRadioButton("Llenar tablero");
 		rdbLlenarTablero.setSelected(true);
 		rdbLlenarTablero.setBounds(567, 56, 111, 23);
 		contentPane.add(rdbLlenarTablero);
@@ -166,6 +166,15 @@ public class FramePrincipal extends JFrame {
 
 	ActionListener inicio_partida = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			
+			if (rdbLlenarTablero.isSelected()) {
+				rdb3fichas.setSelected(false);
+				llenar_tablero = true;
+			}else if(rdb3fichas.isSelected()){
+				rdbLlenarTablero.setSelected(false);
+				llenar_tablero = false;
+			}
+			
 			if (textJug1.getText().isEmpty() || textJug2.getText().isEmpty()) {
 				lblAccion.setText("Introduce los nombres de los jugadores");
 			}
@@ -256,7 +265,7 @@ public class FramePrincipal extends JFrame {
 	}
 
 	private void xo(JToggleButton b) {
-		int vuelta=0;
+		
 		b.setFont(new Font("Arial", Font.BOLD, 70));
 		if (b.isSelected()) {
 			if (turn%2 == 0) {
@@ -293,8 +302,5 @@ public class FramePrincipal extends JFrame {
 			return;
 		check_cpu_turn();
 	}
-<<<<<<< HEAD
-=======
 
->>>>>>> 33fd0d3d326e7d8ee382010324dd3b03778173dc
 }
