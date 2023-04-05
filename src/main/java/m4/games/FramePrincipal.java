@@ -329,34 +329,45 @@ public class FramePrincipal extends JFrame {
 		}
 	}
 
+	//Method to make the plays
 	private void xo(JToggleButton b) {
 		
 		b.setFont(new Font("Arial", Font.BOLD, 70));
+		
+		//if button is selected
 		if (b.isSelected()) {
+			
+			//action to perform if it is the turn of the second player
 			if (turn%2 == 0) {
 				lblAccion.setText("Turno de jugador " + textJug2.getText());
+				//this player uses the X and disables the button when selecting it
 				b.setText("X");
 				b.setEnabled(false);
-				b.setEnabled(false);
 				turn++;
+				//if more than 3 moves have already done by each player and play in the 3-chip mode
 				if (turn >= 6 && !llenar_tablero) {
+					//enable the buttons used by the opponent player
 					for (JToggleButton btn : listaBotones) {
 						btn.setEnabled(btn.getText() == "O");
 					}
 				}
+				//If not,is the turn of the first player 
 			} else {
 				lblAccion.setText("Turno de jugador " + textJug1.getText());
+				//this player uses the O and disables the button when selecting it
 				b.setText("O");
 				b.setEnabled(false);
-				b.setEnabled(false);
 				turn++; 
+				//if more than 3 moves have already done by each player and play in the 3-chip mode
 				if (turn >= 6 && !llenar_tablero) {
 					for (JToggleButton btn : listaBotones) {
+						//enable the buttons used by the opponent player
 						btn.setEnabled(btn.getText() == "X");
 					}
 				}
 			}
 		}
+		//if not,we clean the buttons and enable them
 		else {
 			b.setText("");
 			for (JToggleButton btn : listaBotones) {
@@ -365,7 +376,7 @@ public class FramePrincipal extends JFrame {
 		}
 		if (ganador())
 			return;
-		if(llenar_tablero && turn >=9)lblAccion.setText("El juego ha terminado");
+		if(llenar_tablero && turn >=9)lblAccion.setText("El juego ha terminado.");
 		check_cpu_turn();
 	}
 
