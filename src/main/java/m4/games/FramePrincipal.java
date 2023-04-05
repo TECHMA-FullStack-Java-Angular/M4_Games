@@ -37,6 +37,7 @@ public class FramePrincipal extends JFrame {
 	private JTextField textJug2;
 	private ButtonGroup jugador1 = new ButtonGroup();
 	private ButtonGroup jugador2 = new ButtonGroup();
+	private ButtonGroup modalidadJuego = new ButtonGroup();
 	private ArrayList<JToggleButton> listaBotones = new ArrayList<JToggleButton>();
 	JToggleButton[][] tablero = new JToggleButton[3][3];
 	JLabel lblAccion;
@@ -50,7 +51,7 @@ public class FramePrincipal extends JFrame {
 	public FramePrincipal() {
 		setTitle("3 en raya");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 721, 480);
+		setBounds(100, 100, 721, 531);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -63,23 +64,23 @@ public class FramePrincipal extends JFrame {
 		contentPane.add(textJug2);
 
 		textJug1 = new JTextField();
-		textJug1.setBounds(510, 162, 96, 20);
+		textJug1.setBounds(517, 170, 96, 20);
 		contentPane.add(textJug1);
 		textJug1.setColumns(10);
 
 		lblAccion = new JLabel("Introduce los nombres de los jugadores");
-		lblAccion.setBounds(427, 80, 226, 14);
+		lblAccion.setBounds(427, 99, 226, 14);
 		contentPane.add(lblAccion);
 
 		gameBoardGenerator();
 
 		JButton btnNuevaPartida = new JButton("Nueva Partida");
 		btnNuevaPartida.addActionListener(inicio_partida);
-		btnNuevaPartida.setBounds(505, 25, 119, 23);
+		btnNuevaPartida.setBounds(506, 425, 119, 23);
 		contentPane.add(btnNuevaPartida);
 
 		JLabel lblJugador1 = new JLabel("Jugador 1:");
-		lblJugador1.setBounds(427, 124, 88, 14);
+		lblJugador1.setBounds(427, 137, 88, 14);
 		contentPane.add(lblJugador1);
 
 		JLabel lblNombre = new JLabel("");
@@ -122,8 +123,24 @@ public class FramePrincipal extends JFrame {
 
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(427, 105, 250, 2);
+		separator.setBounds(427, 124, 250, 2);
 		contentPane.add(separator);
+		
+		JRadioButton rdb3fichas = new JRadioButton("3 fichas");
+		rdb3fichas.setSelected(true);
+		rdb3fichas.setBounds(427, 56, 111, 23);
+		contentPane.add(rdb3fichas);
+		modalidadJuego.add(rdb3fichas);
+		
+		JRadioButton rdbLlenarTablero = new JRadioButton("Llenar tablero");
+		rdbLlenarTablero.setSelected(true);
+		rdbLlenarTablero.setBounds(567, 56, 111, 23);
+		contentPane.add(rdbLlenarTablero);
+		modalidadJuego.add(rdbLlenarTablero);
+		
+		JLabel lblModalidadJuego = new JLabel("Seleccione una modalidad de juego");
+		lblModalidadJuego.setBounds(427, 24, 251, 14);
+		contentPane.add(lblModalidadJuego);
 
 		setVisible(true);
 	}
@@ -264,6 +281,4 @@ public class FramePrincipal extends JFrame {
 		}
 		
 	}
-
-	
 }
