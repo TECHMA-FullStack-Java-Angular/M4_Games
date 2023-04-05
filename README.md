@@ -4,8 +4,7 @@ Juego con 3 fichas cada jugador:
 - En su turno el jugador puede: colocar una ficha / mover una ficha.
 - Colocar una ficha: Si el jugador tiene fichas disponibles, debe colocarla en una intersección vacía del tablero (donde no haya otra ficha). 
 - Mover una ficha: Cuando el jugador tenga todas sus fichas en el tablero, debe mover una de sus fichas.
--- Movimiento: Las fichas se mueven en línea recta, hasta la siguiente intersección vacía.
--- NO puede saltar sobre otra ficha.
+-- Movimiento: Las fichas se mueven colocándola en cualquier posición libre.
 
 Termino el turno: cuando el jugador coloca o mueve una ficha termina su turno.
 
