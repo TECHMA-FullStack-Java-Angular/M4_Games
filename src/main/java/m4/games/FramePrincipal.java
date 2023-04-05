@@ -33,7 +33,7 @@ public class FramePrincipal extends JFrame {
 	JRadioButton rdbtnCPU_1, rdbtnCPU_2;
 
 	private int turn = 0;
-	boolean llenar_tablero = false;
+	boolean llenar_tablero = true;
 	
 
 	/**
@@ -150,7 +150,7 @@ public class FramePrincipal extends JFrame {
 	ActionListener inicio_partida = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			if (textJug1.getText().isEmpty() || textJug2.getText().isEmpty()) {
-				lblAccion.setText("Introduce los nombres de los jugadores");
+				lblAccion.setText("¡Introduce los nombres de los jugadores!");
 			}
 			else if (rdbtnCPU_1.isSelected() && rdbtnCPU_2.isSelected()) {
 				lblAccion.setText("Almenos un jugador debe ser humano");
@@ -182,6 +182,19 @@ public class FramePrincipal extends JFrame {
 	private JToggleButton getFromTablero(int[] pos) {
 		return tablero[pos[0]][pos[1]];
 	}
+	private boolean equals(int[] a, int[] b) {
+		if (a.length != b.length) return false;
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] != b[i]) return false;
+		}
+		return true;
+	}
+	private boolean contains(ArrayList<int[]> al, int[] a) {
+		for (int[] a_al : al) {
+			if (equals(a, a_al)) return true;
+		}
+		return false;
+	}
 	private JToggleButton cpu_choose(int player) {
 		String me = player == 0 ? "X":"O";
 		//String they = player == 1 ? "X":"0";
@@ -209,12 +222,12 @@ public class FramePrincipal extends JFrame {
 			else if (n_they == 2 && n_empty == 1) one2lose = list_empty.get(0);
 			else if (n_me == 1 && n_empty == 2) {
 				for (int[] pos : list_empty) {
-					if (two2win.contains(pos)) doubleTwo2win = pos;
+					if (contains(two2win, pos)) {doubleTwo2win = pos; System.out.println("222win");}
 					else two2win.add(pos);
 				}
 			} else if (n_they == 1 && n_empty == 2) {
 				for (int[] pos : list_empty) {
-					if (two2lose.contains(pos)) doubleTwo2lose = pos;
+					if (contains(two2lose, pos)) {doubleTwo2lose = pos; System.out.println("222lose");}
 					else two2lose.add(pos);
 				}
 			}
