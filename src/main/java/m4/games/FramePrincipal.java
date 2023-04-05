@@ -17,12 +17,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.Set;
 import java.awt.event.ActionEvent;
 import javax.swing.JInternalFrame;
 import javax.swing.border.LineBorder;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
+
+
+import javafx.util.Pair;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -160,15 +165,17 @@ public class FramePrincipal extends JFrame {
 			if (textJug1.getText().isEmpty() || textJug2.getText().isEmpty()) {
 				lblAccion.setText("Introduce los nombres de los jugadores");
 			}
-			// else if (rdbtnCPU.isSelected && rdnbtn)
+			else if (rdbtnCPU_1.isSelected() && rdbtnCPU_2.isSelected()) {
+				lblAccion.setText("Almenos un jugador debe ser humano");
+			}
 			else {
 				for (int i = 0; i < listaBotones.size(); i++) {
 					listaBotones.get(i).setSelected(false);
 					listaBotones.get(i).setText("");
 					listaBotones.get(i).setEnabled(true);
-					check_cpu_turn();
 				}
-				turn = 0;
+				turn=0;
+				check_cpu_turn();
 			}
 		}
 
@@ -177,11 +184,70 @@ public class FramePrincipal extends JFrame {
 	public boolean ganador() {
 		// si hay un ganador lo mustra por pantalla y reorna true
 		// si no hay ganador retorna false
-		return true;
+		return false;
+	}
+
+	int threes[][][] = {{{0,0},{0,1},{0,2}}, {{1,0},{1,1},{1,2}}, {{2,0},{2,1},{2,2}},
+						{{0,0},{1,0},{2,0}}, {{0,1},{1,1},{2,1}}, {{0,2},{1,2},{2,2}},
+						{{0,0},{1,1},{2,2}}, {{0,2},{1,1},{2,0}}};
+	
+	private JToggleButton getFromTablero(int[] pos) {
+		return tablero[pos[0]][pos[1]];
+	}
+	private JToggleButton cpu_choose(int player) {
+		String me = player == 0 ? "X":"O";
+		//String they = player == 1 ? "X":"0";
+		int[] one2win = null;
+		int[] one2lose = null;
+		int[] doubleTwo2win = null;
+		int[] doubleTwo2lose = null;
+		ArrayList<int[]> two2win = new ArrayList<>();
+		ArrayList<int[]> two2lose = new ArrayList<>();
+		for (int[][] three : threes) {
+			ArrayList<int[]> list_empty = new ArrayList<>();
+			int n_empty = 0;
+			int n_me = 0;
+			int n_they = 0;
+			for (int[] pos : three) {
+				String status = getFromTablero(pos).getText();
+				if (status == "") {
+					n_empty++; 
+					list_empty.add(pos);
+				}
+				else if (status == me) n_me++;
+				else n_they++;
+			}
+			if (n_me == 2 && n_empty == 1) {one2win = list_empty.get(0); break;}
+			else if (n_they == 2 && n_empty == 1) one2lose = list_empty.get(0);
+			else if (n_me == 1 && n_empty == 2) {
+				for (int[] pos : list_empty) {
+					if (two2win.contains(pos)) doubleTwo2win = pos;
+					else two2win.add(pos);
+				}
+			} else if (n_they == 1 && n_empty == 2) {
+				for (int[] pos : list_empty) {
+					if (two2lose.contains(pos)) doubleTwo2lose = pos;
+					else two2lose.add(pos);
+				}
+			}
+		}
+		if (one2win != null) return getFromTablero(one2win);
+		if (one2lose != null) return getFromTablero(one2lose);
+		if (doubleTwo2win != null) return getFromTablero(doubleTwo2win);
+		if (doubleTwo2lose != null) return getFromTablero(doubleTwo2lose);
+		int[][] priority = {{1,1},{0,0},{0,2},{2,0},{2,2},{0,1},{1,0},{1,2},{2,1}};
+		for (int[] pos : priority) {
+				if (getFromTablero(pos).getText() == "") return getFromTablero(pos);
+		}
+		return null;
 	}
 
 	public void check_cpu_turn() {
-		// si es el turno de CPU, tuira CPU
+		if (turn < 9 && (turn%2==0 ? rdbtnCPU_1 : rdbtnCPU_2).isSelected()) {
+			JToggleButton btn = cpu_choose(turn%2);
+			btn.setSelected(true);
+			//xo(btn);
+		}
 	}
 
 	private void xo(JToggleButton b) {
@@ -192,6 +258,7 @@ public class FramePrincipal extends JFrame {
 				lblAccion.setText("Turno de jugador " + textJug2.getText());
 				b.setText("X");
 				b.setEnabled(false);
+				b.setEnabled(false);
 				turn++;
 				if (turn >= 6) {
 					for (JToggleButton btn : listaBotones) {
@@ -199,8 +266,10 @@ public class FramePrincipal extends JFrame {
 					}
 				}
 			} else {
+			} else {
 				lblAccion.setText("Turno de jugador " + textJug1.getText());
 				b.setText("O");
+				b.setEnabled(false);
 				b.setEnabled(false);
 				turn++;
 				if (turn >= 6) {
