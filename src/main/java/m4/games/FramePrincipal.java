@@ -167,8 +167,10 @@ public class FramePrincipal extends JFrame {
 	ActionListener inicio_partida = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
+			//game mode selection
 			llenar_tablero = rdbLlenarTablero.isSelected();
 			
+			//only start if you have the fields filled in
 			if (textJug1.getText().isEmpty() || textJug2.getText().isEmpty()) {
 				lblAccion.setText("¡Introduce los nombres de los jugadores!");
 			}
@@ -176,6 +178,8 @@ public class FramePrincipal extends JFrame {
 				lblAccion.setText("Almenos un jugador debe ser humano");
 			}
 			else {
+				
+				//the game is activated
 				for (int i = 0; i < listaBotones.size(); i++) {
 					listaBotones.get(i).setSelected(false);
 					listaBotones.get(i).setText("");
@@ -367,7 +371,7 @@ public class FramePrincipal extends JFrame {
 				}
 			}
 		}
-		//if not,we clean the buttons and enable them
+		//when changing position
 		else {
 			b.setText("");
 			for (JToggleButton btn : listaBotones) {
