@@ -139,9 +139,14 @@ public class FramePrincipal extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * This method create game board
+	 */
 	public void gameBoardGenerator() {
+		// Default positions
 		int px = 60;
 		int py = 60;
+		
 		final int SIZE = 90;
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
