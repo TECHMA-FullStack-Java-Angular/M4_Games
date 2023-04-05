@@ -266,7 +266,6 @@ public class FramePrincipal extends JFrame {
 					}
 				}
 			} else {
-			} else {
 				lblAccion.setText("Turno de jugador " + textJug1.getText());
 				b.setText("O");
 				b.setEnabled(false);
