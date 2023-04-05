@@ -258,7 +258,7 @@ public class FramePrincipal extends JFrame {
 				b.setText("O");
 				b.setEnabled(false);
 				b.setEnabled(false);
-				turn++;
+				turn++; 
 				if (turn >= 6 && !llenar_tablero) {
 					for (JToggleButton btn : listaBotones) {
 						btn.setEnabled(btn.getText() == "X");
