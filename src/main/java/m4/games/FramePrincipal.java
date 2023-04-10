@@ -7,6 +7,9 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+//import java.util.Pair;
+
 import javax.swing.JToggleButton;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultButtonModel;
@@ -61,7 +64,7 @@ public class FramePrincipal extends JFrame {
 		contentPane.add(textJug1);
 		textJug1.setColumns(10);
 
-		lblAccion = new JLabel("Introduce los nombres de los jugadores");
+		lblAccion = new JLabel("Introduzca nombres a los jugadores");
 		lblAccion.setBounds(427, 99, 226, 14);
 		contentPane.add(lblAccion);
 
@@ -137,9 +140,14 @@ public class FramePrincipal extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * This method create game board
+	 */
 	public void gameBoardGenerator() {
+		// Default positions
 		int px = 60;
 		int py = 60;
+		
 		final int SIZE = 90;
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -173,14 +181,15 @@ public class FramePrincipal extends JFrame {
 			
 			//only start if you have the fields filled in
 			if (textJug1.getText().isEmpty() || textJug2.getText().isEmpty()) {
-				lblAccion.setText("¡Introduce los nombres de los jugadores!");
+				lblAccion.setText("¡Introduzca nombres a los jugadores!");
 			}
 			else if (rdbtnCPU_1.isSelected() && rdbtnCPU_2.isSelected()) {
 				lblAccion.setText("Almenos un jugador debe ser humano");
 			}
 			else {
+				lblAccion.setText("Turno de jugador " + textJug1.getText());
 				
-				//the game is activated
+				//let's start the game
 				for (int i = 0; i < listaBotones.size(); i++) {
 					listaBotones.get(i).setSelected(false);
 					listaBotones.get(i).setText("");
@@ -303,15 +312,24 @@ public class FramePrincipal extends JFrame {
 		}
 		return false;
 	}
-	private JToggleButton cpu_choose(int player) {
+	private class Choice {
+		Choice(int score, JToggleButton button) {
+			this.score = score;
+			this.button = button;
+		}
+		int score;
+		JToggleButton button;
+	}
+	private Choice cpu_choose(int player) {
 		String me = player == 0 ? "X":"O";
 		//String they = player == 1 ? "X":"0";
 		int[] one2win = null;
-		int[] one2lose = null;
+		int[] one2loose = null;
 		int[] doubleTwo2win = null;
-		int[] doubleTwo2lose = null;
+		int[] doubleTwo2loose = null;
 		ArrayList<int[]> two2win = new ArrayList<>();
-		ArrayList<int[]> two2lose = new ArrayList<>();
+		ArrayList<int[]> two2loose = new ArrayList<>();
+		boolean willLoose = false;
 		for (int[][] three : threes) {
 			ArrayList<int[]> list_empty = new ArrayList<>();
 			int n_empty = 0;
@@ -326,91 +344,135 @@ public class FramePrincipal extends JFrame {
 				else if (status == me) n_me++;
 				else n_they++;
 			}
-			if (n_me == 2 && n_empty == 1) {one2win = list_empty.get(0); break;}
-			else if (n_they == 2 && n_empty == 1) one2lose = list_empty.get(0);
+			// If I move to the empty slot I win
+			if (n_me == 2 && n_empty == 1) {
+				one2win = list_empty.get(0);
+				break;
+			}
+			// If they move to the empty slot, they'll win. So I have to block it.
+			else if (n_they == 2 && n_empty == 1) {
+				if (one2loose == null) one2loose = list_empty.get(0);
+				else willLoose = true;
+			}
 			else if (n_me == 1 && n_empty == 2) {
 				for (int[] pos : list_empty) {
-					if (contains(two2win, pos)) {doubleTwo2win = pos; System.out.println("222win");}
+					// If I move to the empty slot I'll have 2 options to win
+					// They can only bock one so I'll win
+					if (contains(two2win, pos)) doubleTwo2win = pos;
 					else two2win.add(pos);
 				}
 			} else if (n_they == 1 && n_empty == 2) {
 				for (int[] pos : list_empty) {
-					if (contains(two2lose, pos)) {doubleTwo2lose = pos; System.out.println("222lose");}
-					else two2lose.add(pos);
+					// If they moved to the empty slot they'd have 2 options to win
+					// I could only bock one so I they'd win.
+					// So I have to block the empty slot
+					if (contains(two2loose, pos)) {
+						if (doubleTwo2loose == null) doubleTwo2loose = pos; 
+						else willLoose = true;
+					}
+					else two2loose.add(pos);
 				}
 			}
 		}
-		if (one2win != null) return getFromTablero(one2win);
-		if (one2lose != null) return getFromTablero(one2lose);
-		if (doubleTwo2win != null) return getFromTablero(doubleTwo2win);
-		if (doubleTwo2lose != null) return getFromTablero(doubleTwo2lose);
+		if (one2win != null) 
+			return new Choice(1, getFromTablero(one2win));
+		if (one2loose != null) 
+			return new Choice(willLoose?15:5, getFromTablero(one2loose));
+		if (doubleTwo2win != null)
+			return new Choice(2, getFromTablero(doubleTwo2win));
+		if (doubleTwo2loose != null) 
+			return new Choice(willLoose?14:4, getFromTablero(doubleTwo2loose));
 		int[][] priority = {{1,1},{0,0},{0,2},{2,0},{2,2},{0,1},{1,0},{1,2},{2,1}};
 		for (int[] pos : priority) {
-				if (getFromTablero(pos).getText() == "") return getFromTablero(pos);
+				if (getFromTablero(pos).getText() == "") 
+					return new Choice(3,getFromTablero(pos));
 		}
 		return null;
 	}
 
-	public void check_cpu_turn() {
-		if (turn < 9 && (turn%2==0 ? rdbtnCPU_1 : rdbtnCPU_2).isSelected()) {
-			JToggleButton btn = cpu_choose(turn%2);
-			btn.setSelected(true);
-			//xo(btn);
+	public void cpu_move_new(int player) {
+		JToggleButton b = cpu_choose(player).button;
+		b.setSelected(true);
+	}
+
+	JToggleButton insertar_ficha_pendiente =  null;
+
+	public void cpu_move_from_board(int player) {
+		String mi_ficha = player == 0 ? "X":"O";
+		ArrayList<JToggleButton> mis_fichas = new ArrayList<>();
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (tablero[i][j].getText() == mi_ficha) 
+					mis_fichas.add(tablero[i][j]);
+			}
 		}
+		JToggleButton best_remove = null;
+		JToggleButton best_insert = null;
+		int best_score = 99;
+		for (JToggleButton b : mis_fichas) {
+			b.setText("");
+			Choice choice = cpu_choose(player);
+			if (choice.score < best_score) {
+				best_remove = b;
+				best_insert = choice.button;
+				best_score = choice.score;
+			}
+			b.setText(mi_ficha);
+		}
+		best_remove.setSelected(false);
+		best_insert.setSelected(true);
+	}
+
+	public void check_cpu_turn() {
+		int player = turn%2;
+		if ((player==0 ? rdbtnCPU_1 : rdbtnCPU_2).isSelected()) {
+			if (turn >= 6 && !llenar_tablero) {
+				cpu_move_from_board(player);
+			}
+			else if (turn < 9) {
+				cpu_move_new(player);
+			}
+		}
+		
 	}
 
 	//Method to make the plays
 	private void xo(JToggleButton b) {
-		
 		b.setFont(new Font("Arial", Font.BOLD, 70));
-		
-		//if button is selected
-		if (b.isSelected()) {
-			
-			//action to perform if it is the turn of the first player
+		if (b.isSelected()) { //a token has been added to this spot
 			if (turn%2 == 0) {
-				lblAccion.setText("Turno de jugador " + textJug2.getText());
-				//this player uses the X and disables the button when selecting it
-				b.setText("X");
+				b.setText("X"); // X for player 1
 				b.setEnabled(false);
+				lblAccion.setText("Turno de jugador " + textJug2.getText()); //player 2 turn
 				turn++;
-				//if more than 3 moves have already done by each player and play in the 3-chip mode
-				if (turn >= 6 && !llenar_tablero) {
-					//enable the buttons used by the opponent player
+				if (turn >= 6 && !llenar_tablero) { //alredy 3 tokens per player
 					for (JToggleButton btn : listaBotones) {
-						btn.setEnabled(btn.getText() == "O");
+						btn.setEnabled(btn.getText() == "O"); // time to move one O token
 					}
 				}
 				//If not,is the turn of the second player 
 			} else {
-				lblAccion.setText("Turno de jugador " + textJug1.getText());
-				//this player uses the O and disables the button when selecting it
-				b.setText("O");
+				b.setText("O"); // O for player 2
 				b.setEnabled(false);
+				lblAccion.setText("Turno de jugador " + textJug1.getText()); //player 1 turn
 				turn++; 
-				//if more than 3 moves have already done by each player and play in the 3-chip mode
-				if (turn >= 6 && !llenar_tablero) {
+				if (turn >= 6 && !llenar_tablero) { //alredy 3 tokens per player
 					for (JToggleButton btn : listaBotones) {
-						//enable the buttons used by the opponent player
-						btn.setEnabled(btn.getText() == "X");
+						btn.setEnabled(btn.getText() == "X"); // time to move one X token
 					}
 				}
 			}
+			if (ganador()) return;
+			if(llenar_tablero && turn >=9)lblAccion.setText("El juego ha terminado.");
+			check_cpu_turn();
 		}
-		//when changing position
-		else {
+		else { //a token has been removed from this spot
 			b.setText("");
 			for (JToggleButton btn : listaBotones) {
-				btn.setEnabled(btn.getText() == "");
+				btn.setEnabled(btn.getText() == ""); //time to add a token to an empty slot
 			}
 		}
-		//a call to ganador to check the winner
-		if (ganador())
-			return;
-		//Ends the game if all buttons are used
-		if(llenar_tablero && turn >=9)lblAccion.setText("El juego ha terminado.");
-		//call for cpu turns
-		check_cpu_turn();
+		
 	}
 
 }
