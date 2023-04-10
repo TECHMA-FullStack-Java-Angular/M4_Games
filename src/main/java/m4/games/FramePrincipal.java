@@ -1,5 +1,6 @@
 package m4.games;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 
@@ -184,6 +185,7 @@ public class FramePrincipal extends JFrame {
 					listaBotones.get(i).setSelected(false);
 					listaBotones.get(i).setText("");
 					listaBotones.get(i).setEnabled(true);
+					listaBotones.get(i).setBackground(null);
 				}
 				turn=0;
 				check_cpu_turn();
@@ -207,21 +209,33 @@ public class FramePrincipal extends JFrame {
 			if(tablero[i][0].getText().equals("X") && tablero[i][1].getText().equals("X") && tablero[i][2].getText().equals("X")){
 				lblAccion.setText("El jugador " + textJug1.getText() + " ha ganado.");
 				winner = true;
+				tablero[i][0].setBackground(Color.green);
+				tablero[i][1].setBackground(Color.green);
+				tablero[i][2].setBackground(Color.green);
 			}
 			// Check columns
 			if(tablero[0][i].getText().equals("X") && tablero[1][i].getText().equals("X") && tablero[2][i].getText().equals("X")){
 				lblAccion.setText("El jugador " + textJug1.getText() + " ha ganado.");
 				winner = true;
+				tablero[0][i].setBackground(Color.green);
+				tablero[1][i].setBackground(Color.green);
+				tablero[2][i].setBackground(Color.green);
 			}
 		}
 		// Check diagonals
 		if (tablero[0][0].getText().equals("X") && tablero[1][1].getText().equals("X") && tablero[2][2].getText().equals("X")) {
 			lblAccion.setText("El jugador " + textJug1.getText() + " ha ganado.");
 			winner = true;
+			tablero[0][0].setBackground(Color.green);
+			tablero[1][1].setBackground(Color.green);
+			tablero[2][2].setBackground(Color.green);
 		}
 		if (tablero[0][2].getText().equals("X") && tablero[1][1].getText().equals("X") && tablero[2][0].getText().equals("X")) {
 			lblAccion.setText("El jugador " + textJug1.getText() + " ha ganado.");
 			winner = true;
+			tablero[0][2].setBackground(Color.green);
+			tablero[1][1].setBackground(Color.green);
+			tablero[2][0].setBackground(Color.green);
 		}
 		
 		// WINNER PLAYER TWO
@@ -230,21 +244,33 @@ public class FramePrincipal extends JFrame {
 					if(tablero[j][0].getText().equals("O") && tablero[j][1].getText().equals("O") && tablero[j][2].getText().equals("O")){
 						lblAccion.setText("El jugador " + textJug2.getText() + " ha ganado.");
 						winner = true;
+						tablero[j][0].setBackground(Color.green);
+						tablero[j][1].setBackground(Color.green);
+						tablero[j][2].setBackground(Color.green);
 					}
 					// Check columns
 					if(tablero[0][j].getText().equals("O") && tablero[1][j].getText().equals("O") && tablero[2][j].getText().equals("O")){
 						lblAccion.setText("El jugador " + textJug2.getText() + " ha ganado.");
 						winner = true;
+						tablero[0][j].setBackground(Color.green);
+						tablero[1][j].setBackground(Color.green);
+						tablero[2][j].setBackground(Color.green);
 					}
 				}
 				// Check diagonals
 				if (tablero[0][0].getText().equals("O") && tablero[1][1].getText().equals("O") && tablero[2][2].getText().equals("O")) {
 					lblAccion.setText("El jugador " + textJug2.getText() + " ha ganado.");
 					winner = true;
+					tablero[0][0].setBackground(Color.green);
+					tablero[1][1].setBackground(Color.green);
+					tablero[2][2].setBackground(Color.green);
 				}
 				if (tablero[0][2].getText().equals("O") && tablero[1][1].getText().equals("O") && tablero[2][0].getText().equals("O")) {
 					lblAccion.setText("El jugador " + textJug2.getText() + " ha ganado.");
 					winner = true;
+					tablero[0][2].setBackground(Color.green);
+					tablero[1][1].setBackground(Color.green);
+					tablero[2][0].setBackground(Color.green);
 				}
 		// Winner stop the game		
 		if (winner) {
